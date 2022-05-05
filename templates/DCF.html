@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>
+        On date {{ date }}:<br>
+        The Enterprise Value of company {{ ticker_name }} is {{ enterprise_value }};<br>
+        the Equity Value of company {{ ticker_name }} is {{ equity_value }};<br>
+        the Share Price of company {{ ticker_name }} is {{ share_price }}.<br>
+        <form method = 'GET' action = '/'>
+            <button>Check New Ticker?</button>
+        </form>
+    </p>
+    <p>
+        <table>
+            <h1>
+                {% for table in tables %}
+                <h2>{{titles[loop.index]}}</h2>                            
+                {{ table|safe }}
+                {% endfor %}     
+            </h1> 
+        </table>
+        Notes:<br>
+            DFCF: Discounted Free Cash Flow Available,<br>
+            EBIT: Firm's Operating Income<br>
+            D&A: Depreciation & Amortization Expense<br>
+            CWC: Current Working Capital (Current Assets - Current Liabilities)<br>
+            CAPEX: Cash Expenditures on Fixed Assets<br>
+    </p>
+    <p>
+        <div id='chart' class='chart'></div>
+        <script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>-->
+        <script type='text/javascript'>
+        var graphs = {{graphJSON | safe}};
+        Plotly.plot('chart',graphs,{});
+        </script>
+    </p>
+</body>
+</html>
